@@ -1,0 +1,18 @@
+{% extends "freddyapp/base.html" %}
+
+{% block title %}Delete {{ animatronic.name }} - Freddy Fazbear's Pizza{% endblock %}
+
+{% block content %}
+    <h1>Delete Animatronic</h1>
+
+    <div style="background-color: #fff3cd; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <p>Are you sure you want to delete <strong>{{ animatronic.name }}</strong>?</p>
+        <p>This action cannot be undone.</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'animatronic_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}
