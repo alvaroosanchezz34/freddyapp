@@ -1,37 +1,36 @@
 {% extends "freddyapp/base.html" %}
 
-{% block title %}{{ animatronic.name }} - Freddy Fazbear's Pizza{% endblock %}
+{% block title %}{{ animatronic.name }}{% endblock %}
 
 {% block content %}
     <h1>{{ animatronic.name }}</h1>
 
-    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
-        <p style="margin-bottom: 10px;"><strong>Animal Type:</strong> {{ animatronic.get_animal_display }}</p>
-        <p style="margin-bottom: 10px;"><strong>Build Date:</strong> {{ animatronic.build_date }}</p>
-        <p style="margin-bottom: 10px;"><strong>Decommissioned:</strong> {% if animatronic.decommissioned %}Yes{% else %}No{% endif %}</p>
+    <div>
+        <p><strong>Animal Type:</strong> {{ animatronic.get_animal_display }}</p>
+        <p><strong>Build Date:</strong> {{ animatronic.build_date }}</p>
+        <p><strong>Decommissioned:</strong> {% if animatronic.decommissioned %}Yes{% else %}No{% endif %}</p>
         
         {% if animatronic.parties.all %}
-            <p style="margin-bottom: 10px;"><strong>Parties:</strong></p>
+            <p><strong>Parties:</strong></p>
             <ul>
                 {% for party in animatronic.parties.all %}
                     <li>{{ party.name }} ({{ party.attendants }} attendants)</li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p style="margin-bottom: 10px;"><strong>Parties:</strong> None</p>
+            <p><strong>Parties:</strong> None</p>
         {% endif %}
     </div>
 
-    <!-- Action buttons -->
-    <div style="margin-top: 20px;">
-        <a href="{% url 'animatronic_list' %}" class="btn btn-secondary">Back to list</a>
+    <div>
+        <a href="{% url 'animatronic_list' %}">Back to list</a>
         
-        {% if user.is_authenticated and user.has_perm "freddyapp.change_animatronic" %}
-            <a href="{% url 'animatronic_edit' animatronic.pk %}" class="btn">Edit</a>
+        {% if user.is_authenticated and perms.freddyapp.change_animatronic %}
+            <a href="{% url 'animatronic_edit' animatronic.pk %}">Edit</a>
         {% endif %}
         
-        {% if user.is_authenticated and user.has_perm "freddyapp.delete_animatronic" %}
-            <a href="{% url 'animatronic_delete' animatronic.pk %}" class="btn btn-danger">Delete</a>
+        {% if user.is_authenticated and perms.freddyapp.delete_animatronic %}
+            <a href="{% url 'animatronic_delete' animatronic.pk %}">Delete</a>
         {% endif %}
     </div>
 {% endblock %}

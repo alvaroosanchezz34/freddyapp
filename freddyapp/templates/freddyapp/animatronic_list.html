@@ -1,17 +1,16 @@
 {% extends "freddyapp/base.html" %}
 
-{% block title %}Animatronics List - Freddy Fazbear's Pizza{% endblock %}
+{% block title %}Animatronics List{% endblock %}
 
 {% block content %}
     <h1>Animatronics</h1>
 
-    <!-- Create new animatronic button - only shown if user has permission -->
-    {% if user.is_authenticated and user.has_perm "freddyapp.add_animatronic" %}
-        <a href="{% url 'animatronic_new' %}" class="btn btn-success">+ New animatronic</a>
+    {% if user.is_authenticated and perms.freddyapp.add_animatronic %}
+        <a href="{% url 'animatronic_new' %}">+ New animatronic</a>
     {% endif %}
 
     {% if animatronics %}
-        <table class="table">
+        <table border="1">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -27,27 +26,18 @@
                         <td>{{ animatronic.name }}</td>
                         <td>{{ animatronic.get_animal_display }}</td>
                         <td>{{ animatronic.build_date }}</td>
+                        <td>{% if animatronic.decommissioned %}Yes{% else %}No{% endif %}</td>
                         <td>
-                            {% if animatronic.decommissioned %}
-                                Yes
-                            {% else %}
-                                No
-                            {% endif %}
-                        </td>
-                        <td>
-                            <!-- View button - always visible for authenticated users -->
                             {% if user.is_authenticated %}
-                                <a href="{% url 'animatronic_view' animatronic.pk %}" class="btn">View</a>
+                                <a href="{% url 'animatronic_view' animatronic.pk %}">View</a>
                             {% endif %}
 
-                            <!-- Edit button - only visible if user has permission -->
-                            {% if user.is_authenticated and user.has_perm "freddyapp.change_animatronic" %}
-                                <a href="{% url 'animatronic_edit' animatronic.pk %}" class="btn">Edit</a>
+                            {% if user.is_authenticated and perms.freddyapp.change_animatronic %}
+                                <a href="{% url 'animatronic_edit' animatronic.pk %}">Edit</a>
                             {% endif %}
 
-                            <!-- Delete button - only visible if user has permission -->
-                            {% if user.is_authenticated and user.has_perm "freddyapp.delete_animatronic" %}
-                                <a href="{% url 'animatronic_delete' animatronic.pk %}" class="btn btn-danger">Delete</a>
+                            {% if user.is_authenticated and perms.freddyapp.delete_animatronic %}
+                                <a href="{% url 'animatronic_delete' animatronic.pk %}">Delete</a>
                             {% endif %}
                         </td>
                     </tr>

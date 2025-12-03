@@ -1,41 +1,37 @@
 {% extends "freddyapp/base.html" %}
 
-{% block title %}Register - Freddy Fazbear's Pizza{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block content %}
-    <div style="max-width: 400px; margin: 0 auto;">
-        <h1>Register</h1>
+    <h1>Register</h1>
 
-        <form method="post">
-            {% csrf_token %}
-            
-            {% for field in form %}
-                <div class="form-group">
-                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    
-                    {% if field.errors %}
-                        <div class="error-message">
-                            {% for error in field.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                
+                {% if field.errors %}
+                    <ul>
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
 
-                    {% if field.help_text %}
-                        <small style="display: block; margin-top: 5px; color: #666;">
-                            {{ field.help_text|safe }}
-                        </small>
-                    {% endif %}
-                </div>
-            {% endfor %}
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">Register</button>
-                <a href="{% url 'animatronic_list' %}" class="btn btn-secondary">Cancel</a>
+                {% if field.help_text %}
+                    <small>{{ field.help_text|safe }}</small>
+                {% endif %}
             </div>
-        </form>
+        {% endfor %}
 
-        <p style="margin-top: 20px;">Already have an account? <a href="{% url 'login' %}">Log in here</a></p>
-    </div>
+        <div>
+            <button type="submit">Register</button>
+            <a href="{% url 'animatronic_list' %}">Cancel</a>
+        </div>
+    </form>
+
+    <p>Already have an account? <a href="{% url 'login' %}">Log in here</a></p>
 {% endblock %}

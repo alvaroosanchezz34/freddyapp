@@ -39,7 +39,7 @@ def animatronic_new(request):
         'form': form,
         'title': 'Create Animatronic'
     }
-    return render(request, 'freddyapp/animatronic_form.html', context)
+    return render(request, 'freddyapp/animatronic_new.html', context)
 
 
 @login_required
@@ -61,7 +61,7 @@ class AnimatronicUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     """Vista para editar un animatrónico (clase)"""
     model = Animatronic
     form_class = AnimatronicForm
-    template_name = 'freddyapp/animatronic_form.html'
+    template_name = 'freddyapp/animatronic_edit.html'
     permission_required = 'freddyapp.change_animatronic'
     
     def get_success_url(self):

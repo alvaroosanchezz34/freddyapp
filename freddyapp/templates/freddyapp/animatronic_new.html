@@ -1,0 +1,45 @@
+{% extends "freddyapp/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            {% if field.name != 'parties' %}
+                <div>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    
+                    {% if field.errors %}
+                        <ul>
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div>
+            <label>{{ form.parties.label }}</label>
+            {{ form.parties }}
+            {% if form.parties.errors %}
+                <ul>
+                    {% for error in form.parties.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div>
+            <button type="submit">Save</button>
+            <a href="{% url 'animatronic_list' %}">Cancel</a>
+        </div>
+    </form>
+{% endblock %}
